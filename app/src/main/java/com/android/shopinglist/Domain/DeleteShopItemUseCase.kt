@@ -5,4 +5,6 @@ class DeleteShopItemUseCase(private  val shopListRepository: ShopListRepository)
 
        shopListRepository.deleteShopItem(shopItem)
     }
+
+
 }
