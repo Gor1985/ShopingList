@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModal = ViewModelProvider(this)[MainViewModal::class.java]
         viewModal.shoplist.observe(this) {
-            shopListAdapter.shopList = it
+            shopListAdapter.submitList(it)
             // showList(it)
         }
 
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item = shopListAdapter.shopList[viewHolder.adapterPosition]
+                val item = shopListAdapter.currentList[viewHolder.adapterPosition]
                 viewModal.deleteShopList(item)
             }
 
@@ -98,8 +98,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.intentCkickk = {
-            for (i in 0 until 10)
-                Log.d("Уроды", i.toString())
+
+
         }
     }
 

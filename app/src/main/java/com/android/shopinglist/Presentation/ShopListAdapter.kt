@@ -4,20 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.shopinglist.Domain.ShopItem
 import com.android.shopinglist.R
-import java.lang.RuntimeException
 
-class ShopListAdapter:RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
-    var shopList = listOf<ShopItem>()
+class ShopListAdapter:ListAdapter<ShopItem,ShopListAdapter.ShopItemViewHolder>(ShopItemDiffCallback()) {
 
-            set(value) {
-        field = value
-        notifyDataSetChanged()
 
-    }
+
 
 var onShopItemLongClickListenerr:((ShopItem)->Unit)?=null
  var intentCkickk:((ShopItem)->Unit)?=null
@@ -25,7 +20,7 @@ var onShopItemLongClickListenerr:((ShopItem)->Unit)?=null
 
         val layot = when (viewType) {
 
-            VIEWTYPE_ENABLED ->R.layout.item_shop_enabled
+            VIEWTYPE_ENABLED -> R.layout.item_shop_enabled
             VIEWTYPE_DESABLED -> R.layout.item_shop_disabled
             else -> throw RuntimeException("UknownViewType $viewType")
 
@@ -38,7 +33,7 @@ var onShopItemLongClickListenerr:((ShopItem)->Unit)?=null
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
-    val shopItem=shopList[position]
+    val shopItem=getItem(position)
 
 
         holder.view.setOnLongClickListener {
@@ -51,18 +46,15 @@ var onShopItemLongClickListenerr:((ShopItem)->Unit)?=null
         holder.tvName.text=  shopItem.name
         holder.tvCount.text=shopItem.count.toString()
 
-
     }
 
-    override fun getItemCount(): Int {
-        return shopList.size
-    }
+
 
 
 
 
     override fun getItemViewType(position: Int): Int {
-        val item=shopList[position]
+        val item=getItem(position)
        return if (item.enabled){
 VIEWTYPE_ENABLED
         }else
@@ -73,9 +65,7 @@ VIEWTYPE_DESABLED
         val tvName =view.findViewById<TextView>(R.id.tv_name)
         val tvCount=view.findViewById<TextView>(R.id.tv_count)
     }
-    interface onShopItemLongClickListener{
-        fun onShopItemLongClick(shopItem: ShopItem)
-    }
+
     interface intentCkick{
         fun intentClick(shopItem: ShopItem)
     }
