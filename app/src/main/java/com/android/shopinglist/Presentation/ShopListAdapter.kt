@@ -66,9 +66,7 @@ VIEWTYPE_DESABLED
         val tvCount=view.findViewById<TextView>(R.id.tv_count)
     }
 
-    interface intentCkick{
-        fun intentClick(shopItem: ShopItem)
-    }
+
 companion object{
     const val VIEWTYPE_ENABLED=100
     const val VIEWTYPE_DESABLED=101
